@@ -1,0 +1,41 @@
+/*
+第一步
+ for (int x=0;x<arr.length ;x++ ) {
+            for (int y=0;y<arr.length ;y++ ) {
+第二步
+ for (int x=0;x<arr.length-1 ;x++ ) {
+            for (int y=0;y<arr.length ;y++ ) {
+第三步            
+  for (int x=0;x<arr.length-1 ;x++ ) {
+            for (int y=x+1;y<arr.length ;y++ ) {
+/*
+
+
+public class Test{
+    public static void main(String[] args) {
+        int[] arr = {1,4,6,3,9};
+        printArr(arr);
+        selectSearch(arr);
+        printArr(arr);
+    }
+    public static void selectSearch(int[] arr){
+        for (int x=0;x<arr.length-1 ;x++ ) {
+            for (int y=x+1;y<arr.length ;y++ ) {
+                if (arr[x]>arr[y]) {
+                    int temp = arr[x];
+                    arr[x] = arr[y];
+                    arr[y] = temp;
+                }
+   
+            }
+            
+        }
+    }
+    public static void printArr(int[] arr){
+        System.out.print("[");
+        for (int i=0;i<arr.length-1 ;i++ ) {
+            System.out.print(arr[i]+",");
+        }
+        System.out.println(arr[arr.length-1]+"]");
+    }
+}
