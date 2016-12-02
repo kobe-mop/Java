@@ -1,0 +1,24 @@
+/**
+ * 
+ * 取出1到20的奇数，返回字符串，中间有空格隔开
+ * 
+ * 
+ * 
+ * */
+
+
+public class GetOddNumber{
+    public static void main(String[] args){
+        System.out.println("get odd number from 1-20");
+        System.out.println(new GetOddNumber().getOddNumber(1,20));
+    }
+
+    String getOddNumber(int start, int end){
+        StringBuffer sb = new StringBuffer();
+        for(int i=start;i<=end;i++){
+            if(i%2==1)
+                sb.append(i+" ");
+        }
+        return sb.toString();
+    }
+}
