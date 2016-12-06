@@ -1,0 +1,24 @@
+class HalfSearch{
+	public static void main(String[] args){
+		int[] arr = {1,4,7,9,28};
+		System.out.println(half(arr,5));
+	}
+	
+	public static int half(int[] arr , int key){
+		int low = 0;
+		int high = arr.length-1;
+		while(low<=high){
+			int mid = (low+high)/2;
+			if(key>arr[mid]){
+				low = mid+1;
+			}
+			else if(key<arr[mid]){
+				high = mid-1;
+			}
+			else{
+				return mid;
+			}
+		}
+		return -1;
+	}
+}
