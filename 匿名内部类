@@ -9,13 +9,12 @@ class Outer{
 			public void show(){
 				System.out.println("show run");
 			}
-		}
+		};
 	}
 }
 
 class InnerClassDemo{
 	public static void main(String[] args){
-		function()
 		Outer.method.show();
 		/* Outer.method():意思是：Outer中有一个名称为method的方法，而且这个方法是静态的。    
            Outer.method().show():当Outer类调用静态的method方法运算结束后的结果又调用了show方法，
@@ -23,6 +22,8 @@ class InnerClassDemo{
 								
 	}
 	
+	
+	/*
 	//匿名内部类作为函数的参数传递
 	function(new Inter(){
 		public void show(){
@@ -33,6 +34,7 @@ class InnerClassDemo{
 	public static void function(Inter in){
 		in.show();
 	}
+	*/
 	
 }
 
