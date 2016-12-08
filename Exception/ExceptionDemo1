@@ -1,0 +1,15 @@
+class  ExceptionDemo1
+{	
+	public static void main(String[] args) 
+	{
+		try
+		{
+			if(b==2)
+				throw new ArithmeticException();
+		}
+		catch(ArithmeticException e)
+		{
+			System.out.println(e.toString());
+		}
+	}
+}
