@@ -1,0 +1,23 @@
+class Demo
+{
+		int div(int a,int b) throws Exception
+		{
+			return a/b;
+		}
+}
+class  ExceptionDemo2
+{	
+	public static void main(String[] args) 
+	{
+		Demo d = new Demo();
+		try
+		{
+			int x = d.div(5,0);
+			System.out.println("x="+x);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+}
