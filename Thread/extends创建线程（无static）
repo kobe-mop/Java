@@ -1,0 +1,29 @@
+class SubThread extends Thread
+{
+	private int ticket = 50;
+	public void run()
+	{
+		while(true)
+		{
+			if(ticket>0)
+			{
+				try{Thread.sleep(10);}catch(Exception e){}
+				System.out.println(Thread.currentThread().getName()+".....run....."+ticket--);
+			}
+
+		}
+	}
+}
+
+class ThreadDemo
+{
+	public static void main(String[] args)
+	{
+		//两个对象，一共有100张票
+    SubThread t1 = new SubThread();
+		SubThread t2 = new SubThread();
+		t1.start();
+		t2.start();
+	}
+
+}
