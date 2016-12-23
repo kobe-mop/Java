@@ -1,0 +1,28 @@
+class SubThread implements Runnable
+{
+	private static int ticket = 50;
+	public void run()
+	{
+		while(true)
+		{
+			if(ticket>0)
+			{
+				try{Thread.sleep(10);}catch(Exception e){}
+				System.out.println(Thread.currentThread().getName()+".....run....."+ticket--);
+			}
+
+		}
+	}
+}
+
+class ThreadDemo
+{
+	public static void main(String[] args)
+	{
+		SubThread t1 = new SubThread();
+		new Thread(t1).start();
+		new Thread(t1).start();
+	}
+
+}
+
