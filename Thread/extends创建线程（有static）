@@ -1,6 +1,6 @@
 class SubThread extends Thread
 {
-	private static int ticket = 50;     // 及时构造多个对象，static表示一共只有50张票 
+	private static int ticket = 50;     // 即使创建多个对象，static表示一共只有50张票 
 	public void run()
 	{
 		while(true)
