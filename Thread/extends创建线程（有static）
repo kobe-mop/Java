@@ -19,6 +19,7 @@ class ThreadDemo
 {
 	public static void main(String[] args)
 	{
+		//两个对象，只有50张票            
 		SubThread t1 = new SubThread();
 		SubThread t2 = new SubThread();
 		t1.start();
