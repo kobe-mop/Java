@@ -1,3 +1,114 @@
+实例操作一：创建一个新文件
+import java.io.File;
+import java.io.IOException;
+
+public class Test1 {
+    public static void main(String[] args) {
+        File f=new File("d:"+File.separator+"test.txt");//为增加可移植性，建议使用File.separator
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+实例操作二：删除一个指定文件
+import java.io.File;
+
+public class Test2 {
+    public static void main(String[] args) {
+        File f=new File("d:"+File.separator+"test.txt");
+        if(f.exists()){//判断文件存不存在，如不存在就不用删除了
+            f.delete();
+        }
+    }
+}
+
+
+实例操作三：综合创建，删除文件的操作
+import java.io.File;
+import java.io.IOException;
+
+public class Test3 {
+    public static void main(String[] args) {
+        File f=new File("d:"+File.separator+"test.txt");
+        if(f.exists()){
+            f.delete();
+        }else{
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
+实例操作四：创建一个文件夹
+import java.io.File;
+
+public class Test4 {
+    public static void main(String[] args) {
+        File f=new File("d:"+File.separator+"test");
+        f.mkdir();//创建文件夹
+    }
+}
+
+实例操作五：列出指定目录的全部文件
+
+如果现在给出了一个目录，则可以直接列出目录中的内容。但是列出的方法在File类中存在两个：
+以字符串数组的形式返回：public String[] list()
+以File数组的形式返回：public File[] listFiles()
+
+操作一：使用list()列出全部内容
+import java.io.File;
+
+public class Test5 {
+    public static void main(String[] args) {
+        File f=new File("d:"+File.separator);
+        String[] str=f.list();
+        for(String s:str){
+            System.out.println(s);
+        }
+    }
+}
+
+操作二：使用listFiles()列出
+import java.io.File;
+
+public class Test6 {
+    public static void main(String[] args) {
+        File f=new File("d:"+File.separator);
+        File[] files=f.listFiles();
+        for(File file:files){
+            System.out.println(file);
+        }
+    }
+}
+
+
+
+实例操作六：判断一个给定的路径是否目录
+import java.io.File;
+
+public class Test7 {
+    public static void main(String[] args) {
+        File f=new File("d:"+File.separator);
+        if(f.isDirectory()){
+            System.out.println(f.getPath()+"是目录");
+        }else{
+            System.out.println(f.getPath()+"不是目录");
+        }
+    }
+}
+
+
+实例操作七：列出指定目录的全部内容
+如果给定了一个目录，则要求把此目录中的全部文件都列出来，包括子文件夹下的文件
+
 import java.io.File;
 
 public class Test1 {
