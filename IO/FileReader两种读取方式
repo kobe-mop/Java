@@ -1,0 +1,40 @@
+class Demo
+{
+	public static void main(String[] args) throws IOException
+	{
+		FileReader fr = new FileReader("test.txt");
+		//BufferedReader bfr = new BufferedReader(fr);
+
+		char[] buf = new char[1024];
+		int len = 0;
+
+		while ((len=fr.read(buf))!=-1) 
+		{
+			System.out.println(new String(buf,0,len));
+		}
+
+		fr.close();
+	}
+}
+
+
+*******************************************
+
+class Demo
+{
+	public static void main(String[] args) throws IOException
+	{
+		FileReader fr = new FileReader("test.txt");
+		//BufferedReader bfr = new BufferedReader(fr);
+
+		char[] buf = new char[1024];
+		int ch = 0;
+
+		while ((ch=fr.read())!=-1) 
+		{
+			System.out.print((char)ch);
+		}
+
+		fr.close();
+	}
+}
