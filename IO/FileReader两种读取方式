@@ -1,9 +1,9 @@
+import java.io.*;
 class Demo
 {
 	public static void main(String[] args) throws IOException
 	{
 		FileReader fr = new FileReader("test.txt");
-		//BufferedReader bfr = new BufferedReader(fr);
 
 		char[] buf = new char[1024];
 		int len = 0;
@@ -19,15 +19,13 @@ class Demo
 
 
 *******************************************
-
+import java.io.*;
 class Demo
 {
 	public static void main(String[] args) throws IOException
 	{
 		FileReader fr = new FileReader("test.txt");
-		//BufferedReader bfr = new BufferedReader(fr);
-
-		char[] buf = new char[1024];
+		
 		int ch = 0;
 
 		while ((ch=fr.read())!=-1) 
