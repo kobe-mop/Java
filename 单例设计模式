@@ -1,24 +1,44 @@
-//懒汉式单例类.在第一次调用的时候实例化自己   
-public class Singleton {  
-    private Singleton() {}  
-    private static Singleton single=null;  
-    //静态工厂方法   
-    public static synchronized Singleton getInstance() {  
-         if (single == null) {    
-             single = new Singleton();  
-         }    
-        return single;  
-    }  
-}  
+//懒汉式：在第一次调用的时候实例化自己 
+class Single
+{
+	private static Single s = null;
+	private Single(){}
+	public static synchronized  Single getInstance()
+	{		
+		if(s == null)			
+			s = new Single();		
+		return s;
+	}
+}
 
-//饿汉式单例类.在类初始化时，已经自行实例化   
-public class Singleton1 {  
-    private Singleton1() {}  
-    private static final Singleton1 single = new Singleton1();  
-    //静态工厂方法   
-    public static Singleton1 getInstance() {  
-        return single;  
-    }  
-}  
+//懒汉式优化
+class Single
+{
+	private static Single s = null;
+	private Single(){}
+	public static  Single getInstance()
+	{
+		if(s==null)
+		{
+			synchronized(Single.class)
+			{
+				if(s == null)			
+					s = new Single();
+			}
+		}
+		return s;
+	}
+}
+
+//饿汉式：在类初始化时，已经自行实例化 
+class Single
+{
+	private static final Single s = new Single();
+	private Single(){}
+	public static Single getInstance()
+	{			
+		return s;
+	}
+}
 
 
