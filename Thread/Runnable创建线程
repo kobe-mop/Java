@@ -1,17 +1,23 @@
 class SubThread implements Runnable
 {
 	private int ticket = 50;
+	Object obj =new Object();
 	public void run()
 	{
-		while(true)
+		synchronized(obj)
 		{
-			if(ticket>0)
+			while(true)
 			{
-				try{Thread.sleep(10);}catch(Exception e){}
-				System.out.println(Thread.currentThread().getName()+".....run....."+ticket--);
-			}
+				if(ticket>0)
+				{
+					try{Thread.sleep(10);}catch(Exception e){}
+					System.out.println(Thread.currentThread().getName()+".....run....."+ticket--);
+				}
 
+			}
 		}
+		
+
 	}
 }
 
