@@ -20,7 +20,7 @@ class  SplitFile
 
 		//切割文件
     
-    File file = new File("c:\\0.bmp");
+    		File file = new File("c:\\0.bmp");
 		FileInputStream fis = new FileInputStream(file);
 
 
@@ -36,9 +36,9 @@ class  SplitFile
 			fos.close();
 		}
 		
-    //存配置文件
+   		//存配置文件
     
-    Properties prop = new Properties();
+   		Properties prop = new Properties();
 
 		prop.setProperty("filecount",count+"");
 		prop.setProperty("filename",file.getName());
