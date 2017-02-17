@@ -1,0 +1,30 @@
+/*
+演示io异常的try处理方式。
+*/
+
+package IO;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class FileWriterDemo3 {
+	public static void main(String[] args) {
+		FileWriter fw = null;
+		
+		try {
+			fw = new FileWriter("a.txt",true);
+			fw.write("\r\nkobe hello");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			if(fw != null)
+				try {
+					fw.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+		}
+	}
+}
