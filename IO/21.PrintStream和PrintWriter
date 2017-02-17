@@ -30,26 +30,25 @@ class PrintDemo
 	{
 		try
 		{
-      FileReader fr=new FileReader("a.txt");
-      BufferedReader br=new BufferedReader(fr);
-      FileWriter fw=new FileWriter("33.txt");
-      PrintWriter pw=new PrintWriter(fw);
+		      FileReader fr=new FileReader("a.txt");
+		      BufferedReader br=new BufferedReader(fr);
+		      FileWriter fw=new FileWriter("33.txt");
+		      PrintWriter pw=new PrintWriter(fw);
 
-      String s= null;
-      while((s=br.readLine())!=null)
-      {
-        //PrintWriter的println方法 相当于
-        //BufferedWriter 的write() + newLine()
-        pw.println(s);
-        s=br.readLine();
-      }
+		      String s= null;
+		      while((s=br.readLine())!=null)
+		      {
+			//PrintWriter的println方法 相当于
+			//BufferedWriter 的write() + newLine()
+			pw.println(s);
+		      }
 
-			br.close();
-			pw.close();
+		      br.close();
+		      pw.close();
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+		      e.printStackTrace();
 		}
 		
 	}
