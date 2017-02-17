@@ -1,0 +1,57 @@
+/*
+PrintStream：
+是一个字节打印流，System.out对应的类型就是PrintStream。
+它的构造函数函数可以接收三种数据类型的值。
+1，字符串路径。
+2，File对象。
+3，OutputStream。
+
+PrintWriter：
+是一个字符打印流。构造函数可以接收四种类型的值。
+1，字符串路径。
+2，File对象。
+3，OutputStream
+4，Writer
+
+注意：该自动刷新值为true时，只有三个方法可以用：println,printf,format. 
+
+//如果想要既有自动刷新，又可执行编码。如何完成流对象的包装？
+PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream("a.txt"),"utf-8"),true);
+
+//如果想要提高效率。还要使用打印方法。
+PrintWriter pw = new PrintWriter(new BufferdWriter(new OutputStreamWriter(new FileOutputStream("a.txt"),"utf-8")),true);
+*/
+
+
+import java.io.*;
+class PrintDemo
+{
+	public static void main(String[] args) 
+	{
+		try
+		{
+      FileReader fr=new FileReader("a.txt");
+      BufferedReader br=new BufferedReader(fr);
+      FileWriter fw=new FileWriter("33.txt");
+      PrintWriter pw=new PrintWriter(fw);
+
+      String s= null;
+      while((s=br.readLine())!=null)
+      {
+        //PrintWriter的println方法 相当于
+        //BufferedWriter 的write() + newLine()
+        pw.println(s);
+        s=br.readLine();
+      }
+
+			br.close();
+			pw.close();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+}
+
