@@ -1,0 +1,27 @@
+package IO;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class FileReaderDemo4 {
+
+	public static void main(String[] args) throws IOException {
+		
+		FileReader fr = new FileReader("a.txt");
+		
+		char[] buf = new char[1024];
+		
+		int len = 0;
+		
+		while((len=fr.read(buf))!=-1)
+		{
+			System.out.println(new String(buf,0,len)); //字符数组转化为字符串1
+			//System.out.println(String.valueOf(buf, 0, len)); //字符数组转化为字符串2
+		}
+
+
+		fr.close();
+	}
+
+}
