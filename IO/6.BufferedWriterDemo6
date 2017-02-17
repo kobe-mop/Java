@@ -1,0 +1,23 @@
+package IO;
+
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+
+public class BufferedWriterDemo6 {
+	public static void main(String[] args) throws IOException {
+		FileWriter fw = new FileWriter("a.txt");
+		BufferedWriter bufw = new BufferedWriter(fw);
+		
+		for(int i=0; i<26;i++)
+		{
+			bufw.write("abc"+i);
+			bufw.newLine();//相当于回车换行 \r\n
+			bufw.flush();
+		}
+		
+		bufw.close();
+	}
+}
