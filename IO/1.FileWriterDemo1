@@ -1,0 +1,32 @@
+/*
+ 字节流可以处理任何数据。
+包括字符数据，但是不可以对数据进行编码转换。
+
+就有了字符流，该字符流的出现内部使用的还是字节流，但是封装了编码表，还可以根据指定的需求，指定编码表。
+
+
+
+需求：通过io对象将数据写入到硬盘的一个文件中。
+使用的就是可以操作文件的字符流对象。FileWriter。
+
+演示io异常的try处理方式 throws。
+*/
+package IO;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class FileWriterDemo1 {
+
+	public static void main(String[] args) throws IOException {
+
+		FileWriter fw = new FileWriter("text.txt");
+
+		fw.write("hello world");
+
+//		fw.flush();
+		
+		fw.close();
+
+	}
+}
