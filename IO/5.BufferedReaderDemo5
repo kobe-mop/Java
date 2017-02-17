@@ -1,0 +1,38 @@
+/*
+readLine方法原理：
+一次读一行。
+必须要判断一个行结束标记。对于windows 行标记是\r\n.
+
+该方法返回的是一行数据但不包括回车符。
+
+
+只需要一个关闭就可以了bufr.close();
+
+
+
+*/
+
+package IO;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class BufferedReaderDemo5 {
+
+	public static void main(String[] args) throws IOException {
+		FileReader fr = new FileReader("a.txt");
+		BufferedReader bufr = new BufferedReader(fr);
+		
+		String line = null;
+		
+		while((line=bufr.readLine())!=null)
+		{
+			System.out.println(line);
+		}
+		
+		bufr.close();
+	}
+
+}
