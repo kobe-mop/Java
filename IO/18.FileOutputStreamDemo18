@@ -1,0 +1,19 @@
+package IO;
+
+/*
+演示FileOutputStream。
+*/
+import java.io.*;
+class  FileOutputStreamDemo18
+{
+	public static void main(String[] args) throws IOException
+	{
+		FileOutputStream fos = new FileOutputStream("text.txt");
+
+		fos.write("abcede \r\nhello".getBytes());//可以直接写到目的地中。
+
+		fos.close();//只用于关闭资源。
+		
+	}
+}
+
