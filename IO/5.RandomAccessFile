@@ -1,0 +1,96 @@
+/*
+
+1，该对象只用于操作文件。
+2，通过构造函数的模式参数指定要进行读（r）或者写(rw)。
+3，该类对象内部封装了字节输入流和输入流，同时封装了一个可延长的字节数组缓冲区。
+4，内部有指针来操作该缓冲区中的数据。
+
+方法名	作用
+getFilePointer()	返回文件记录指针的当前位置
+seek(long pos)	将文件记录指针定位到pos的位置
+
+现有如下的一个需求，向已存在1G数据的txt文本里末尾追加一行文字，内容如下“Lucene是一款非常优秀的全文检索库”。可能大多数朋友会觉得这个需求很easy，
+说实话，确实easy，然后XXX君开始实现了，直接使用Java中的流读取了txt文本里原来所有的数据转成字符串后，然后拼接了“Lucene是一款非常优秀的全文检索库”，
+又写回文本里了，至此，大功告成。后来需求改了，向5G数据的txt文本里追加了，结果XXX君傻了，他内存只有4G，如果强制读取所有的数据并追加，会报内存溢出的异常。
+
+其实上面的需求很简单，如果我们使用JAVA IO体系中的RandomAccessFile类来完成的话，可以实现零内存追加。其实这就是支持任意位置读写类的强大之处。
+/*
+
+import java.io.*;
+
+class  RandomAccessFileDemo
+{
+	public static void main(String[] args) throws IOException
+	{
+		//通过该类将一些姓名信息写入到文件中。
+
+
+		File file = new File("info.txt");
+		
+		randomWrite(file);
+
+		//randomRead(file);
+		
+		//randomWrite2(file);
+
+	}
+
+
+
+	/*
+	通过RandomAccessFile类进行文件的创建，并写入数据。
+	*/
+	public static void randomWrite(File file)throws IOException
+	{
+		RandomAccessFile raf = new RandomAccessFile(file,"rw");
+
+		raf.write("zhangsan\r\n".getBytes());
+		raf.write("lisi\r\n".getBytes());
+		raf.write("wangwu".getBytes());
+		
+		raf.close();
+	}
+
+	/*
+	读取操作。
+	*/
+	public static void randomRead(File file)throws IOException
+	{
+		RandomAccessFile raf = new RandomAccessFile(file,"r");
+		System.out.println("RandomAccessFile文件指针的初始位置:"+raf.getFilePointer());  
+
+		//raf.skipBytes(8*2);//指定跳过的字节数，
+		//System.out.println("RandomAccessFile文件指针的初始位置:"+raf.getFilePointer());  
+
+
+		raf.seek(8);// 将缓冲中的指针进行自定义指定，就可以获取执行的数据信息。
+		System.out.println("RandomAccessFile文件指针的初始位置:"+raf.getFilePointer());  
+
+
+		byte[] buf = new byte[1024];
+		int len = 0;
+		
+		while((len=raf.read(buf))!=-1)
+		{
+			System.out.println(new String(buf,0,len));  
+		}
+
+		raf.close();
+
+
+	}
+
+	/*
+	修改已有数据。
+	*/
+	public static void randomWrite2(File file)throws IOException
+	{
+		RandomAccessFile raf = new RandomAccessFile(file,"rw");
+
+		raf.seek(10);
+		raf.write("LISI".getBytes());	
+			
+		raf.close();
+	}
+
+}
