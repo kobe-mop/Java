@@ -46,28 +46,12 @@ class  ArrayListDemo2
 		List ll = al.subList(1,2);
 		System.out.println("ll:"+ll);
 		
-		//6.获取集合中的值
-		// 方法1
-		Iterator<String> it = al.iterator();
-		while(it.hasNext())
+		//6,获取元素。
+		for(int x=0; x<al.size(); x++)
 		{
-			System.out.println(it.next()+"..");
-		} 
-		// 方法2  
-		for (Iterator<String> it1 = al.iterator(); it1.hasNext();) 
-		{  
-		       System.out.println(it1.next()+"--");  
-		}  
-		// 方法3 此方法必须加泛型，不然报错 Type mismatch: cannot convert from element type Object to String  
-		for (String tmp : al) 
-		{  
-		       System.out.println(tmp+"++");  
-		}  
-		// 方法4  
-			for (int i = 0; i < al.size(); i++) {  
-		       System.out.println(al.get(i)+"**");  
-		} 
-
+			System.out.println("get("+x+"):"+al.get(x));
+		}
+		
 		System.out.println(al);
 
 		
