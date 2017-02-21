@@ -1,5 +1,3 @@
-package day13;
-
 /*
 Collection
 	|--List:列表中的元素都有角标。而且元素是有序的。可以重复。
@@ -20,7 +18,7 @@ class  ArrayListDemo2
 	public static void main(String[] args) 
 	{
 
-		ArrayList al = new ArrayList();
+		ArrayList<String> al = new ArrayList<String>();
 
 		al.add("abc1");
 		al.add("abc2");
@@ -54,7 +52,26 @@ class  ArrayListDemo2
 		{
 			System.out.println("get("+x+"):"+al.get(x));
 		}
-
+		
+		//7.获取集合中的值
+		// 方法1
+		Iterator<String> it = al.iterator();
+		while(it.hasNext())
+		{
+			System.out.println(it.next()+"..");
+		} 
+        // 方法2  
+        for (Iterator<String> it1 = al.iterator(); it1.hasNext();) {  
+	       System.out.println(it1.next()+"--");  
+        }  
+	   	// 方法3  
+    	for (String tmp : al) {  
+	       System.out.println(tmp+"++");  
+    	}  
+    	// 方法4  
+	   	for (int i = 0; i < al.size(); i++) {  
+	       System.out.println(al.get(i)+"**");  
+    	} 
 
 		System.out.println(al);
 
