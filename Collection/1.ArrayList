@@ -66,18 +66,18 @@ class ArrayListDemo
 		{
 			System.out.println(it.next()+"..");
 		} 
-    // 方法2  
-    for (Iterator<String> it1 = al.iterator(); it1.hasNext();) {  
-        System.out.println(it1.next()+"--");  
-    }  
-    // 方法3  
-    for (String tmp : al) {  
-        System.out.println(tmp+"++");  
-    }  
-    // 方法4  
-    for (int i = 0; i < al.size(); i++) {  
-        System.out.println(al.get(i)+"**");  
-    }  
+	        // 方法2  
+	        for (Iterator<String> it1 = al.iterator(); it1.hasNext();) {  
+		       System.out.println(it1.next()+"--");  
+	        }  
+	   	// 方法3  
+	    	for (String tmp : al) {  
+		       System.out.println(tmp+"++");  
+	    	}  
+	    	// 方法4  
+	   	for (int i = 0; i < al.size(); i++) {  
+		       System.out.println(al.get(i)+"**");  
+	    	}  
 
 
 	}
