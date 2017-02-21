@@ -38,10 +38,8 @@ java会抛出一个异常，并发修改异常。java.util.ConcurrentModificatio
 
 想要在迭代过程中操作元素，可以通过List集合的ListIterator 列表迭代器来完成。
 
-迭代器只支持在迭代过程中删除动作。
-
-而迭代器的子接口ListIterator，
-还支持在迭代过程中，添加元素和修改元素的动作。
+Iterator只支持在迭代过程中remove()动作。
+ListIterator支持迭代过程中的 add() remove() set() 。
 
 
 */
@@ -58,12 +56,12 @@ class  ArrayListDemo3
 		
 		ListIterator li = al.listIterator(); //增 删 改 查		
 		
-    while(li.hasNext())
+                while(li.hasNext())
 		{
 			String s = (String)li.next();
 			if(s.equals("abc2"))
 				//li.add("haha");
-        //li.remove();
+                                //li.remove();
 				li.set("qq");
 			System.out.println(s);
 		}
@@ -72,8 +70,6 @@ class  ArrayListDemo3
 		{
 			System.out.println("previous::"+li.previous());
 		}
-
-		System.out.println(al);
 	}
 }
 
