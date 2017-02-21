@@ -43,17 +43,18 @@ class ArrayListDemo
 		System.out.println(al);
 
 		//3,删除一个元素。
-		al.remove("abc3");
-		System.out.println(al);
-
-		//4,交集。
-		boolean a = al.retainAll(al1);  //al的值被改变成 交集
+		boolean a = al.remove("abc3");
 		System.out.println("a="+a);
 		System.out.println(al);
 
-		//5,判断一个元素。
-		boolean b = al.contains("abc22"); //al的值不变
+		//4,交集。
+		boolean b = al.retainAll(al1);  //al的值被改变成 交集
 		System.out.println("b="+b);
+		System.out.println(al);
+
+		//5,判断一个元素。
+		boolean c = al.contains("abc22"); //al的值不变
+		System.out.println("c="+c);
 		System.out.println(al);
 	
 		//6.获取集合的长度。
