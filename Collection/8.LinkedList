@@ -32,6 +32,11 @@ pollLast();
 
 LinkedList是可以模拟一些其他的数据结构的。
 
+|   abc4   ---last
+|   abc3
+|   abc2 	
+|   abc1   ---first
+
 1，堆栈:先进后出，
 2，队列:先进先出。
 */
@@ -45,7 +50,14 @@ class  LinkedListDemo
 		link.addFirst("abc2");
 		link.addFirst("abc3");
 		link.addFirst("abc4");
-
+		
+		/*  LinkedList存储结构如下		
+		|   abc4   ---last
+		|   abc3
+		|   abc2 	
+		|   abc1   ---first
+		*/
+		
 		while(!link.isEmpty())
 		{
 			System.out.println("remove:"+link.removeFirst());
