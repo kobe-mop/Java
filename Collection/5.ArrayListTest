@@ -37,8 +37,8 @@ class  ArrayListTest
 		while(it.hasNext())
 		{
 
-			//Object obj = it.next(); //注意it.next()返回值是Object类型，如果没有加泛型，那么必须要强制类型转换			
-      //Person p = (Person)obj; 
+			//Object obj = it.next(); 			
+      			//Person p = (Person)obj; //注意返回值是Object，使用对象的setter getter方法，要强制类型转换
 			//简写。
 			Person p = (Person)it.next();
 			System.out.println(p.getName()+"---"+p.getAge());
