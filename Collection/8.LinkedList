@@ -62,15 +62,6 @@ class  LinkedListDemo
 		{
 			System.out.println("remove:"+link.removeFirst());
 		}
-
-		
-/*		System.out.println("first:"+link.getFirst());//abc4
-		System.out.println("last:"+link.getLast());
-		
-		System.out.println("removelast:"+link.removeLast());
-
-		
-		System.out.println(link);*/
 		
 	}
 }
