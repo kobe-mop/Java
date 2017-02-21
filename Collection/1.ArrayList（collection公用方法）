@@ -58,8 +58,16 @@ class ArrayListDemo
 	
 		//6.获取集合的长度。
 		System.out.println(al.size());
+				
+		//7.集合转化为数组
+		String[] arr =new String[al.size()]; //分配空间
+		al.toArray(arr);
+		for(String s: arr)//打印数组元素 
+		{
+			System.out.println(s);
+		}
 
-		//7.获取集合中的值
+		//8.获取集合中的值
 		// 方法1
 		Iterator<String> it = al.iterator();
 		while(it.hasNext())
