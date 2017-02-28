@@ -1,35 +1,334 @@
-72、Java中有几种类型的流？JDK为每种类型的流提供了一些抽象类以供继承，请说出他们分别是哪些类？
-字节流，字符流。字节流继承于InputStream OutputStream，字符流继承于InputStreamReader，OutputStreamWriter。
-
+71、说出一些常用的类，包，接口，请各举5个
+要让人家感觉你对java ee开发很熟，所以，不能仅仅只列core java中的那些东西，要多列你在做ssh项目中涉及的那些东西。就写你最近写的那些程序中涉及的那些类。
+常用的类：BufferedReader BufferedWriter FileReader FileWirter String Integer
+java.util.Date，System，Class，List,HashMap
+常用的包：java.lang java.io java.util java.sql,javax.servlet,org.apache.strtuts.action,org.hibernate
+常用的接口：Remote List Map Document NodeList,Servlet,HttpServletRequest,HttpServletResponse,Transaction(Hibernate)、Session(Hibernate),HttpSession
+72、java中有几种类型的流？JDK为每种类型的流提供了一些抽象类以供继承，请说出他们分别是哪些类？
+字节流，字符流。字节流继承于InputStream OutputStream，字符流继承于InputStreamReaderOutputStreamWriter。在java.io包中还有许多其他的流，主要是为了提高性能和使用方便。
+73、字节流与字符流的区别
+要把一片二进制数据数据逐一输出到某个设备中，或者从某个设备中逐一读取一片二进制数据，不管输入输出设备是什么，我们要用统一的方式来完成这些操作，用一种抽象的方式进行描述，这个抽象描述方式起名为IO流，对应的抽象类为OutputStream和InputStream，不同的实现类就代表不同的输入和输出设备，它们都是针对字节进行操作的。
+在应用中，经常要完全是字符的一段文本输出去或读进来，用字节流可以吗？计算机中的一切最终都是二进制的字节形式存在。对于“中国”这些字符，首先要得到其对应的字节，然后将字节写入到输出流。读取时，首先读到的是字节，可是我们要把它显示为字符，我们需要将字节转换成字符。由于这样的需求很广泛，人家专门提供了字符流的包装类。
+底层设备永远只接受字节数据，有时候要写字符串到底层设备，需要将字符串转成字节再进行写入。字符流是字节流的包装，字符流则是直接接受字符串，它内部将串转成字节，再写入底层设备，这为我们向IO设别写入或读取字符串提供了一点点方便。
+字符向字节转换时，要注意编码的问题，因为字符串转成字节数组，
+其实是转成该字符的某种编码的字节形式，读取也是反之的道理。
+讲解字节流与字符流关系的代码案例：
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+public class IOTest {
+public static void main(String[]args) throws Exception {
+String str = "中国人";
+/*FileOutputStreamfos = newFileOutputStream("1.txt");
+fos.write(str.getBytes("UTF-8"));
+fos.close();*/
+/*FileWriter fw =new FileWriter("1.txt");
+fw.write(str);
+fw.close();*/
+PrintWriter pw =new PrintWriter("1.txt","utf-8");
+pw.write(str);
+pw.close();
+/*FileReader fr =new FileReader("1.txt");
+char[] buf = newchar[1024];
+int len =fr.read(buf);
+String myStr = newString(buf,0,len);
+System.out.println(myStr);*/
+/*FileInputStreamfr = new FileInputStream("1.txt");
+byte[] buf = newbyte[1024];
+int len =fr.read(buf);
+String myStr = newString(buf,0,len,"UTF-8");
+System.out.println(myStr);*/
+BufferedReader br =new BufferedReader(
+newInputStreamReader(
+newFileInputStream("1.txt"),"UTF-8"
+)
+);
+String myStr =br.readLine();
+br.close();
+System.out.println(myStr);
+}
+}
+74、什么是java序列化，如何实现java序列化？或者请解释Serializable接口的作用。
+我们有时候将一个java对象变成字节流的形式传出去或者从一个字节流中恢复成一个java对象，例如，要将java对象存储到硬盘或者传送给网络上的其他计算机，这个过程我们可以自己写代码去把一个java对象变成某个格式的字节流再传输，但是，jre本身就提供了这种支持，我们可以调用OutputStream的writeObject方法来做，如果要让java帮我们做，要被传输的对象必须实现serializable接口，这样，javac编译时就会进行特殊处理，编译的类才可以被writeObject方法操作，这就是所谓的序列化。需要被序列化的类必须实现Serializable接口，该接口是一个mini接口，其中没有需要实现的方法，implementsSerializable只是为了标注该对象是可被序列化的。
+例如，在web开发中，如果对象被保存在了Session中，tomcat在重启时要把Session对象序列化到硬盘，这个对象就必须实现Serializable接口。如果对象要经过分布式系统进行网络传输或通过rmi等远程调用，这就需要在网络上传输对象，被传输的对象就必须实现Serializable接口。
 75、描述一下JVM加载class文件的原理机制?
-JVM中类的装载是由ClassLoader和它的子类来实现的,JavaClassLoader是一个重要的Java运行时系统组件。它负责在运行时查找和装入类文件的类。
-
+JVM中类的装载是由ClassLoader和它的子类来实现的,Java ClassLoader是一个重要的Java运行时系统组件。它负责在运行时查找和装入类文件的类。
 76、heap和stack有什么区别。
-java的内存分为两类，一类是栈内存，一类是堆内存。栈内存是指程序进入一个方法时，会为这个方法单独分配一块私属存储空间，用于存储这个方法内部的局部变量，
-当这个方法结束时，分配给这个方法的栈会释放，这个栈中的变量也将随之释放。
-堆是与栈作用不同的内存，一般用于存放不放在当前方法栈中的那些数据，例如，使用new创建的对象都放在堆里，所以，它不会随方法的结束而消失。
-方法中的局部变量使用final修饰后，放在堆中，而不是栈中。
-
+java的内存分为两类，一类是栈内存，一类是堆内存。栈内存是指程序进入一个方法时，会为这个方法单独分配一块私属存储空间，用于存储这个方法内部的局部变量，当这个方法结束时，分配给这个方法的栈会释放，这个栈中的变量也将随之释放。
+堆是与栈作用不同的内存，一般用于存放不放在当前方法栈中的那些数据，例如，使用new创建的对象都放在堆里，所以，它不会随方法的结束而消失。方法中的局部变量使用final修饰后，放在堆中，而不是栈中。
 77、GC是什么?为什么要有GC?
-GC是垃圾收集的意思（GabageCollection）,内存处理是编程人员容易出现问题的地方，忘记或者错误的内存回收会导致程序或系统的不稳定甚至崩溃，
-Java提供的GC功能可以自动监测对象是否超过作用域从而达到自动回收内存的目的，Java语言没有提供释放已分配内存的显示操作方法。
-
+GC是垃圾收集的意思（Gabage Collection）,内存处理是编程人员容易出现问题的地方，忘记或者错误的内存回收会导致程序或系统的不稳定甚至崩溃，Java提供的GC功能可以自动监测对象是否超过作用域从而达到自动回收内存的目的，Java语言没有提供释放已分配内存的显示操作方法。
 78、垃圾回收的优点和原理。并考虑2种回收机制。
-Java语言中一个显著的特点就是引入了垃圾回收机制，使c++程序员最头疼的内存管理的问题迎刃而解，它使得Java程序员在编写程序的时候不再需要考虑内存管理。
-由于有个垃圾回收机制，Java中的对象不再有"作用域"的概念，只有对象的引用才有"作用域"。垃圾回收可以有效的防止内存泄露，有效的使用可以使用的内存。
-垃圾回收器通常是作为一个单独的低级别的线程运行，不可预知的情况下对内存堆中已经死亡的或者长时间没有使用的对象进行清楚和回收，
-程序员不能实时的调用垃圾回收器对某个对象或所有对象进行垃圾回收。回收机制有分代复制垃圾回收和标记垃圾回收，增量垃圾回收。
-
+Java语言中一个显著的特点就是引入了垃圾回收机制，使c++程序员最头疼的内存管理的问题迎刃而解，它使得Java程序员在编写程序的时候不再需要考虑内存管理。由于有个垃圾回收机制，Java中的对象不再有"作用域"的概念，只有对象的引用才有"作用域"。垃圾回收可以有效的防止内存泄露，有效的使用可以使用的内存。垃圾回收器通常是作为一个单独的低级别的线程运行，不可预知的情况下对内存堆中已经死亡的或者长时间没有使用的对象进行清楚和回收，程序员不能实时的调用垃圾回收器对某个对象或所有对象进行垃圾回收。回收机制有分代复制垃圾回收和标记垃圾回收，增量垃圾回收。
 79、垃圾回收器的基本原理是什么？垃圾回收器可以马上回收内存吗？有什么办法主动通知虚拟机进行垃圾回收？
-对于GC来说，当程序员创建对象时，GC就开始监控这个对象的地址、大小以及使用情况。通常，GC采用有向图的方式记录和管理堆(heap)中的所有对象。
-通过这种方式确定哪些对象是"可达的"，哪些对象是"不可达的"。当GC确定一些对象为"不可达"时，GC就有责任回收这些内存空间。可以。
-程序员可以手动执行System.gc()，通知GC运行，但是Java语言规范并不保证GC一定会执行。
-
+对于GC来说，当程序员创建对象时，GC就开始监控这个对象的地址、大小以及使用情况。通常，GC采用有向图的方式记录和管理堆(heap)中的所有对象。通过这种方式确定哪些对象是"可达的"，哪些对象是"不可达的"。当GC确定一些对象为"不可达"时，GC就有责任回收这些内存空间。可以。程序员可以手动执行System.gc()，通知GC运行，但是Java语言规范并不保证GC一定会执行。
+80、什么时候用assert。
+assertion(断言)在软件开发中是一种常用的调试方式，很多开发语言中都支持这种机制。在实现中，assertion就是在程序中的一条语句，它对一个boolean表达式进行检查，一个正确程序必须保证这个boolean表达式的值为true；如果该值为false，说明程序已经处于不正确的状态下，assert将给出警告或退出。一般来说，assertion用于保证程序最基本、关键的正确性。assertion检查通常在开发和测试时开启。为了提高性能，在软件发布后，assertion检查通常是关闭的。
+package com.huawei.interview;
+publicclass AssertTest {
+/**
+* @paramargs
+*/
+public static voidmain(String[] args) {
+// TODO Auto-generated method stub
+int i = 0;
+for(i=0;i<5;i++)
+{
+System.out.println(i);
+}
+//假设程序不小心多了一句--i;
+--i;
+assert i==5;
+}
+}
 81、java中会存在内存泄漏吗，请简单描述。
-所谓内存泄露就是指一个不再被程序使用的对象或变量一直被占据在内存中。java中有垃圾回收机制，它可以保证一对象不再被引用的时候，
-即对象编程了孤儿的时候，对象将自动被垃圾回收器从内存中清除掉。由于Java使用有向图的方式进行垃圾回收管理，可以消除引用循环的问题，
-例如有两个对象，相互引用，只要它们和根进程不可达的，那么GC也是可以回收它们的。java中的内存泄露的情况：
-长生命周期的对象持有短生命周期对象的引用就很可能发生内存泄露
-
-82abstract的methods不能以private修饰，也不能加final修饰。
-被final修饰的变量不可修改。static method不能直接call non-staticmethods。
+所谓内存泄露就是指一个不再被程序使用的对象或变量一直被占据在内存中。java中有垃圾回收机制，它可以保证一对象不再被引用的时候，即对象编程了孤儿的时候，对象将自动被垃圾回收器从内存中清除掉。由于Java使用有向图的方式进行垃圾回收管理，可以消除引用循环的问题，例如有两个对象，相互引用，只要它们和根进程不可达的，那么GC也是可以回收它们的，例如下面的代码可以看到这种情况的内存回收：
+package com.huawei.interview;
+import java.io.IOException;
+publicclass GarbageTest {
+/**
+* @paramargs
+* @throwsIOException
+*/
+public static voidmain(String[] args)throws IOException {
+// TODO Auto-generated method stub
+try {
+gcTest();
+} catch (IOException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+}
+System.out.println("hasexited gcTest!");
+System.in.read();
+System.in.read();
+System.out.println("out begingc!");
+for(int i=0;i<100;i++)
+{
+System.gc();
+System.in.read();
+System.in.read();
+}
+}
+private static voidgcTest()throws IOException {
+System.in.read();
+System.in.read();
+Person p1 = new Person();
+System.in.read();
+System.in.read();
+Person p2 = new Person();
+p1.setMate(p2);
+p2.setMate(p1);
+System.out.println("beforeexit gctest!");
+System.in.read();
+System.in.read();
+System.gc();
+System.out.println("exitgctest!");
+}
+private static classPerson
+{
+byte[] data =new byte[20000000];
+Person mate = null;
+public void setMate(Personother)
+{
+mate = other;
+}
+}
+}
+java中的内存泄露的情况：长生命周期的对象持有短生命周期对象的引用就很可能发生内存泄露，尽管短生命周期对象已经不再需要，但是因为长生命周期对象持有它的引用而导致不能被回收，这就是java中内存泄露的发生场景，通俗地说，就是程序员可能创建了一个对象，以后一直不再使用这个对象，这个对象却一直被引用，即这个对象无用但是却无法被垃圾回收器回收的，这就是java中可能出现内存泄露的情况，例如，缓存系统，我们加载了一个对象放在缓存中(例如放在一个全局map对象中)，然后一直不再使用它，这个对象一直被缓存引用，但却不再被使用。
+检查java中的内存泄露，一定要让程序将各种分支情况都完整执行到程序结束，然后看某个对象是否被使用过，如果没有，则才能判定这个对象属于内存泄露。
+如果一个外部类的实例对象的方法返回了一个内部类的实例对象，这个内部类对象被长期引用了，即使那个外部类实例对象不再被使用，但由于内部类持久外部类的实例对象，这个外部类对象将不会被垃圾回收，这也会造成内存泄露。
+下面内容来自于网上（主要特点就是清空堆栈中的某个元素，并不是彻底把它从数组中拿掉，而是把存储的总数减少，本人写得可以比这个好，在拿掉某个元素时，顺便也让它从数组中消失，将那个元素所在的位置的值设置为null即可）：
+我实在想不到比那个堆栈更经典的例子了,以致于我还要引用别人的例子，下面的例子不是我想到的，是书上看到的，当然如果没有在书上看到，可能过一段时间我自己也想的到，可是那时我说是我自己想到的也没有人相信的。
+public class Stack {
+private Object[] elements=new Object[10];
+private int size = 0;
+public void push(Object e){
+ensureCapacity();
+elements[size++] = e;
+}
+public Object pop(){
+if( size == 0)
+throw new EmptyStackException();
+return elements[--size];
+}
+private void ensureCapacity(){
+if(elements.length == size){
+Object[] oldElements = elements;
+elements = new Object[2 * elements.length+1];
+System.arraycopy(oldElements,0, elements, 0, size);
+}
+}
+}
+上面的原理应该很简单，假如堆栈加了10个元素，然后全部弹出来，虽然堆栈是空的，没有我们要的东西，但是这是个对象是无法回收的，这个才符合了内存泄露的两个条件：无用，无法回收。
+但是就是存在这样的东西也不一定会导致什么样的后果，如果这个堆栈用的比较少，也就浪费了几个K内存而已，反正我们的内存都上G了，哪里会有什么影响，再说这个东西很快就会被回收的，有什么关系。下面看两个例子。
+例子1
+public class Bad{
+public static Stack s=Stack();
+static{
+s.push(new Object());
+s.pop(); //这里有一个对象发生内存泄露
+s.push(new Object()); //上面的对象可以被回收了，等于是自愈了
+}
+}
+因为是static，就一直存在到程序退出，但是我们也可以看到它有自愈功能，就是说如果你的Stack最多有100个对象，那么最多也就只有100个对象无法被回收其实这个应该很容易理解，Stack内部持有100个引用，最坏的情况就是他们都是无用的，因为我们一旦放新的进取，以前的引用自然消失！
+内存泄露的另外一种情况：当一个对象被存储进HashSet集合中以后，就不能修改这个对象中的那些参与计算哈希值的字段了，否则，对象修改后的哈希值与最初存储进HashSet集合中时的哈希值就不同了，在这种情况下，即使在contains方法使用该对象的当前引用作为的参数去HashSet集合中检索对象，也将返回找不到对象的结果，这也会导致无法从HashSet集合中单独删除当前对象，造成内存泄露。
+82、能不能自己写个类，也叫java.lang.String？
+可以，但在应用的时候，需要用自己的类加载器去加载，否则，系统的类加载器永远只是去加载jre.jar包中的那个java.lang.String。由于在tomcat的web应用程序中，都是由webapp自己的类加载器先自己加载WEB-INF/classess目录中的类，然后才委托上级的类加载器加载，如果我们在tomcat的web应用程序中写一个java.lang.String，这时候Servlet程序加载的就是我们自己写的java.lang.String，但是这么干就会出很多潜在的问题，原来所有用了java.lang.String类的都将出现问题。
+虽然java提供了endorsed技术，可以覆盖jdk中的某些类，具体做法是….。但是，能够被覆盖的类是有限制范围，反正不包括java.lang这样的包中的类。
+（下面的例如主要是便于大家学习理解只用，不要作为答案的一部分，否则，人家怀疑是题目泄露了）例如，运行下面的程序：
+package java.lang;
+publicclass String {
+/**
+* @paramargs
+*/
+public static voidmain(String[] args) {
+// TODO Auto-generated method stub
+System.out.println("string");
+}
+}
+报告的错误如下：
+java.lang.NoSuchMethodError:main
+Exception inthread "main"
+这是因为加载了jre自带的java.lang.String，而该类中没有main方法。
+83. Java代码查错
+1.
+abstract class Name {
+private String name;
+public abstract boolean isStupidName(String name) {}
+}
+大侠们，这有何错误?
+答案: 错。abstract method必须以分号结尾，且不带花括号。
+2.
+public class Something {
+void doSomething () {
+private String s = "";
+int l = s.length();
+}
+}
+有错吗?
+答案: 错。局部变量前不能放置任何访问修饰符 (private，public，和protected)。final可以用来修饰局部变量
+(final如同abstract和strictfp，都是非访问修饰符，strictfp只能修饰class和method而非variable)。
+3.
+abstract class Something {
+private abstract String doSomething ();
+}
+这好像没什么错吧?
+答案: 错。abstract的methods不能以private修饰。abstract的methods就是让子类implement(实现)具体细节的，怎么可以用private把abstract
+method封锁起来呢? (同理，abstract method前不能加final)。
+4.
+public class Something {
+public int addOne(final int x) {
+return ++x;
+}
+}
+这个比较明显。
+答案: 错。int x被修饰成final，意味着x不能在addOne method中被修改。
+5.
+public class Something {
+public static void main(String[] args) {
+Other o = new Other();
+new Something().addOne(o);
+}
+public void addOne(final Other o) {
+o.i++;
+}
+}
+class Other {
+public int i;
+}
+和上面的很相似，都是关于final的问题，这有错吗?
+答案: 正确。在addOne method中，参数o被修饰成final。如果在addOne method里我们修改了o的reference
+(比如: o = new Other();)，那么如同上例这题也是错的。但这里修改的是o的member vairable
+(成员变量)，而o的reference并没有改变。
+6.
+class Something {
+int i;
+public void doSomething() {
+System.out.println("i = "+ i);
+}
+} 
+有什么错呢? 看不出来啊。
+答案: 正确。输出的是"i = 0"。int i属於instant variable (实例变量，或叫成员变量)。instant variable有default value。int的default value是0。
+7.
+class Something {
+final int i;
+public void doSomething() {
+System.out.println("i = "+ i);
+}
+}
+和上面一题只有一个地方不同，就是多了一个final。这难道就错了吗?
+答案: 错。final int i是个final的instant variable (实例变量，或叫成员变量)。final的instant variable没有default value，
+必须在constructor (构造器)结束之前被赋予一个明确的值。可以修改为"final int i =0;"。
+8.
+public class Something {
+public static void main(String[] args) {
+Something s = new Something();
+System.out.println("s.doSomething() returns " + doSomething());
+}
+public String doSomething() {
+return "Do something ...";
+}
+}
+看上去很完美。
+答案: 错。看上去在main里call doSomething没有什么问题，毕竟两个methods都在同一个class里。但仔细看，main是static的。static method不能直接call non-staticmethods。可改成"System.out.println("s.doSomething()returns " + s.doSomething());"。同理，static method不能访问non-static instant variable。
+9.
+此处，Something类的文件名叫OtherThing.java
+class Something {
+private static void main(String[] something_to_do){ 
+System.out.println("Dosomething ...");
+}
+}
+这个好像很明显。
+答案: 正确。从来没有人说过Java的Class名字必须和其文件名相同。但public class的名字必须和文件名相同。
+10．
+interface A{
+int x = 0;
+}
+class B{
+int x =1;
+}
+class C extends B implements A {
+public void pX(){
+System.out.println(x);
+}
+public static void main(String[] args) {
+new C().pX();
+}
+}
+答案：错误。在编译时会发生错误(错误描述不同的JVM有不同的信息，意思就是未明确的x调用，两个x都匹配
+（就象在同时import java.util和java.sql两个包时直接声明Date一样）。对于父类的变量,可以用super.x来明确，
+而接口的属性默认隐含为 public staticfinal.所以可以通过A.x来明确。
+11.
+interface Playable {
+void play();
+}
+interface Bounceable {
+void play();
+}
+interface Rollable extends Playable, Bounceable {
+Ball ball = new Ball("PingPang");
+}
+class Ball implements Rollable {
+private String name;
+public String getName() {
+return name;
+}
+public Ball(String name) {
+this.name =name; 
+}
+public void play() {
+ball = newBall("Football");
+System.out.println(ball.getName());
+}
+}
+这个错误不容易发现。
+答案: 错。"interfaceRollable extends Playable, Bounceable"没有问题。interface可继承多个interfaces，所以这里没错。
+问题出在interface Rollable里的"Ball ball =new Ball("PingPang");"。任何在interface里声明的interface variable (接口变量，也可称成员变量)，
+默认为public static final。也就是说"Ball ball = new Ball("PingPang");"实际上是"public staticfinal Ball ball = new Ball("PingPang");"。
+在Ball类的Play()方法中，"ball = newBall("Football");"改变了ball的reference，而这里的ball来自Rollable interface，
+Rollable interface里的ball是public static final的，final的object是不能被改变reference的。因此编译器将在"ball = newBall("Football");
+"这里显示有错。
